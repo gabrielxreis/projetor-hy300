@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#12325c">
+<title>Cinema em Casa</title>
+<style>
+  :root{
+    --fundo:#0e2440; --cartao:#173a66; --borda:#24508a; --texto:#f3f8ff; --suave:#a9c4e6;
+    --azul:#4fa3e3; --laranja:#f28c38; --amarelo:#f6c945; --ok:#4fa3e3;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;background:var(--fundo);color:var(--texto);
+    font-family:ui-rounded,"SF Pro Rounded","Arial Rounded MT Bold",system-ui,sans-serif}
+  main{max-width:980px;margin:0 auto;padding:16px 16px 32px;display:flex;flex-direction:column;align-items:center;gap:16px}
+  h1{margin:4px 0 0;font-size:clamp(22px,4vw,32px);letter-spacing:.3px;text-align:center}
+  h1 span{color:var(--amarelo)}
+  .status{font-size:13px;color:var(--suave);min-height:18px;text-align:center}
+  .tela{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:16px;overflow:hidden;
+    border:3px solid var(--borda);box-shadow:0 10px 30px rgba(0,0,0,.35);touch-action:none;cursor:pointer}
+  .tela img{width:100%;height:100%;object-fit:contain;display:block;user-select:none;-webkit-user-drag:none}
+  .tela .vazio{position:absolute;inset:0;display:grid;place-items:center;color:var(--suave);font-size:15px;text-align:center;padding:16px}
+  .ponto{position:absolute;width:28px;height:28px;margin:-14px 0 0 -14px;border-radius:50%;border:3px solid var(--amarelo);
+    pointer-events:none;animation:sumir .5s ease-out forwards}
+  @keyframes sumir{from{transform:scale(.6);opacity:1}to{transform:scale(1.6);opacity:0}}
+  .painel{width:100%;display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:center}
+  @media (max-width:640px){.painel{grid-template-columns:1fr}}
+  .grupo{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+  button{font:inherit;color:var(--texto);background:var(--cartao);border:2px solid var(--borda);border-radius:14px;
+    padding:12px 16px;min-width:56px;min-height:52px;font-size:16px;cursor:pointer;transition:transform .08s,background .15s}
+  button:hover{background:#1e4a80}
+  button:active{transform:scale(.94)}
+  .dpad{display:grid;grid-template-columns:repeat(3,64px);grid-template-rows:repeat(3,64px);gap:8px;justify-content:center}
+  .dpad button{min-width:0;padding:0;font-size:22px}
+  .dpad .ok{background:var(--ok);border-color:#8cc6f2;border-radius:50%;font-weight:700;font-size:18px}
+  .apps{width:100%;display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
+  .apps button{font-weight:700}
+  .apps .netflix{background:#141414;border-color:#e50914}
+  .apps .youtube{background:#f1f1f1;color:#e1002d;border-color:#ddd}
+  .apps .prime{background:#0f79e2;border-color:#4ba3ff}
+  .apps .appletv{background:#000;border-color:#444}
+  .apps .hdmi{background:#12325c}
+  .apps .config{background:#24508a}
+  .rotulo{font-size:12px;color:var(--suave);text-align:center;margin-bottom:6px;letter-spacing:.5px;text-transform:uppercase}
+  .entrar{position:fixed;inset:0;background:rgba(8,20,38,.94);display:none;place-items:center;padding:16px}
+  .entrar form{background:var(--cartao);border:2px solid var(--borda);border-radius:18px;padding:24px;width:min(360px,100%);
+    display:flex;flex-direction:column;gap:12px;text-align:center}
+  .entrar input{font:inherit;font-size:18px;padding:12px;border-radius:12px;border:2px solid var(--borda);background:#0e2440;color:var(--texto);text-align:center}
+</style>
+</head>
+<body>
+<main>
+  <h1>Cinema em <span>Casa</span></h1>
+  <div class="status" id="status">Conectando ao projetor…</div>
+
+  <div class="tela" id="tela" title="Clique para tocar; arraste para rolar">
+    <img id="img" alt="Tela do projetor">
+    <div class="vazio" id="vazio">Carregando a tela do projetor…</div>
+  </div>
+
+  <div class="apps">
+    <button class="netflix" data-app="netflix">Netflix</button>
+    <button class="youtube" data-app="youtube">YouTube</button>
+    <button class="prime" data-app="prime">Prime Video</button>
+    <button class="appletv" data-app="appletv">Apple TV</button>
+    <button class="hdmi" data-app="hdmi">HDMI</button>
+    <button class="config" data-app="config" aria-label="Configurações">⚙︎</button>
+  </div>
+
+  <div class="painel">
+    <div>
+      <div class="rotulo">Navegar</div>
+      <div class="grupo">
+        <button data-tecla="voltar">↩ Voltar</button>
+        <button data-tecla="inicio">⌂ Início</button>
+        <button data-tecla="play">⏯</button>
+      </div>
+    </div>
+    <div class="dpad">
+      <span></span><button data-tecla="cima" aria-label="Cima">▲</button><span></span>
+      <button data-tecla="esq" aria-label="Esquerda">◀</button><button class="ok" data-tecla="ok">OK</button><button data-tecla="dir" aria-label="Direita">▶</button>
+      <span></span><button data-tecla="baixo" aria-label="Baixo">▼</button><span></span>
+    </div>
+    <div>
+      <div class="rotulo">Volume</div>
+      <div class="grupo">
+        <button data-tecla="volmenos" aria-label="Diminuir volume">−</button>
+        <button data-tecla="mudo" aria-label="Mudo">🔇</button>
+        <button data-tecla="volmais" aria-label="Aumentar volume">+</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div class="entrar" id="entrar">
+  <form id="form">
+    <h2 style="margin:0">Cinema em <span style="color:var(--amarelo)">Casa</span></h2>
+    <div class="status">Digite a senha do controle</div>
+    <input type="password" id="senha" autocomplete="current-password" required>
+    <button type="submit">Entrar</button>
+  </form>
+</div>
+
+<script>
+const $ = (s) => document.querySelector(s);
+const img = $('#img'), tela = $('#tela'), status = $('#status');
+let falhas = 0, ativo = true;
+
+async function enviar(rota, dados) {
+  const r = await fetch(rota, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(dados) });
+  if (r.status === 401) pedirSenha();
+  return r.ok;
+}
+function pedirSenha() { $('#entrar').style.display = 'grid'; ativo = false; $('#senha').focus(); }
+$('#form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const r = await fetch('/entrar', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ senha: $('#senha').value }) });
+  if (r.ok) { $('#entrar').style.display = 'none'; ativo = true; atualizar(); } else { $('#senha').value = ''; $('#senha').placeholder = 'Senha errada'; }
+});
+
+async function atualizar() {
+  if (!ativo) return;
+  try {
+    const r = await fetch('/quadro.jpg?t=' + Date.now(), { cache: 'no-store' });
+    if (r.status === 401) return pedirSenha();
+    if (!r.ok) throw 0;
+    const url = URL.createObjectURL(await r.blob());
+    img.onload = () => URL.revokeObjectURL(url);
+    img.src = url; $('#vazio').style.display = 'none';
+    status.textContent = 'Projetor conectado'; falhas = 0;
+  } catch {
+    falhas++; status.textContent = falhas > 2 ? 'Projetor desligado ou fora da rede' : 'Reconectando…';
+    if (falhas > 2) $('#vazio').style.display = 'grid';
+  }
+  setTimeout(atualizar, document.hidden ? 3000 : 300);
+}
+
+// clique = toque; arrastar = rolar
+let inicio = null;
+function pos(e) { const r = tela.getBoundingClientRect(); return { x: (e.clientX - r.left) / r.width, y: (e.clientY - r.top) / r.height, px: e.clientX - r.left, py: e.clientY - r.top }; }
+tela.addEventListener('pointerdown', (e) => { inicio = pos(e); tela.setPointerCapture(e.pointerId); });
+tela.addEventListener('pointerup', (e) => {
+  if (!inicio) return; const fim = pos(e);
+  const dist = Math.hypot(fim.px - inicio.px, fim.py - inicio.py);
+  if (dist < 12) {
+    const p = document.createElement('div'); p.className = 'ponto'; p.style.left = fim.px + 'px'; p.style.top = fim.py + 'px';
+    tela.appendChild(p); setTimeout(() => p.remove(), 600);
+    enviar('/toque', { x: fim.x, y: fim.y });
+  } else enviar('/arrastar', { x1: inicio.x, y1: inicio.y, x2: fim.x, y2: fim.y });
+  inicio = null;
+});
+
+document.querySelectorAll('[data-tecla]').forEach((b) => b.addEventListener('click', () => enviar('/tecla', { tecla: b.dataset.tecla })));
+document.querySelectorAll('[data-app]').forEach((b) => b.addEventListener('click', () => enviar('/app', { app: b.dataset.app })));
+
+// setas do teclado do computador tambem funcionam (sem digitar texto: o projetor abre o YouTube com letras)
+const MAPA = { ArrowUp: 'cima', ArrowDown: 'baixo', ArrowLeft: 'esq', ArrowRight: 'dir', Enter: 'ok', Escape: 'voltar', Backspace: 'voltar', ' ': 'play' };
+document.addEventListener('keydown', (e) => { if (e.target.tagName === 'INPUT') return; const t = MAPA[e.key]; if (t) { e.preventDefault(); enviar('/tecla', { tecla: t }); } });
+document.addEventListener('visibilitychange', () => { if (!document.hidden) atualizar(); });
+atualizar();
+</script>
+</body>
+</html>

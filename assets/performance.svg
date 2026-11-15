@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" width="1000" height="520" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif">
+  <rect width="1000" height="520" rx="20" fill="#0f1426"/>
+  <text x="500" y="52" text-anchor="middle" font-size="26" font-weight="800" fill="#fff">Antes x Depois</text>
+  <g font-size="14" fill="#9aa0bd" text-anchor="middle"><rect x="395" y="70" width="14" height="14" rx="3" fill="#5a607c"/><text x="445" y="82">antes</text><rect x="510" y="70" width="14" height="14" rx="3" fill="#ffd166"/><text x="563" y="82">depois</text></g>
+
+  <!-- 1 apps compilados: escala 61 = 560px -->
+  <text x="60" y="135" font-size="17" font-weight="700" fill="#fff">Apps compilados em código nativo</text>
+  <rect x="60" y="148" width="9" height="22" rx="4" fill="#5a607c"/><text x="80" y="165" font-size="15" fill="#c8cbe0">1 de 61</text>
+  <rect x="60" y="176" width="551" height="22" rx="4" fill="#ffd166"/><text x="622" y="193" font-size="15" font-weight="700" fill="#ffd166">60 de 61 (60x)</text>
+
+  <!-- 2 RAM livre: escala 1000 MB = 560px -->
+  <text x="60" y="245" font-size="17" font-weight="700" fill="#fff">Memória livre depois de ligar</text>
+  <rect x="60" y="258" width="345" height="22" rx="4" fill="#5a607c"/><text x="416" y="275" font-size="15" fill="#c8cbe0">~615 MB</text>
+  <rect x="60" y="286" width="560" height="22" rx="4" fill="#ff7eb6"/><text x="631" y="303" font-size="15" font-weight="700" fill="#ff7eb6">~1.000 MB (+60%)</text>
+
+  <!-- 3 processos do fabricante: escala 6 = 300px -->
+  <text x="60" y="355" font-size="17" font-weight="700" fill="#fff">Processos do fabricante rodando o tempo todo</text>
+  <rect x="60" y="368" width="300" height="22" rx="4" fill="#5a607c"/><text x="371" y="385" font-size="15" fill="#c8cbe0">6 (só o espelhamento de tela comia 93 MB)</text>
+  <rect x="60" y="396" width="4" height="22" rx="2" fill="#9fb4ff"/><text x="75" y="413" font-size="15" font-weight="700" fill="#9fb4ff">0</text>
+
+  <g font-size="15" text-anchor="middle">
+    <rect x="60" y="445" width="270" height="48" rx="12" fill="#ffffff0d"/><text x="195" y="466" fill="#9aa0bd">CPU</text><text x="195" y="485" fill="#fff" font-weight="700">sob demanda → 1,4 GHz fixo</text>
+    <rect x="365" y="445" width="270" height="48" rx="12" fill="#ffffff0d"/><text x="500" y="466" fill="#9aa0bd">Animações</text><text x="500" y="485" fill="#fff" font-weight="700">0,5x → desligadas</text>
+    <rect x="670" y="445" width="270" height="48" rx="12" fill="#ffffff0d"/><text x="805" y="466" fill="#9aa0bd">Desligar</text><text x="805" y="485" fill="#fff" font-weight="700">2 toques → 1 toque</text>
+  </g>
+</svg>

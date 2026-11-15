@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>com.projetor-hy300.turbo</string>
+  <key>ProgramArguments</key>
+  <array><string>/bin/zsh</string><string>__HOME__/Library/Application Support/Projetor-HY300/turbo.sh</string></array>
+  <key>StartInterval</key><integer>20</integer>
+  <key>RunAtLoad</key><true/>
+  <key>StandardErrorPath</key><string>__HOME__/Library/Application Support/Projetor-HY300/turbo.err</string>
+</dict>
+</plist>

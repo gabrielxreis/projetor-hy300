@@ -1,0 +1,6 @@
+app-configuracoes/build/
+app-configuracoes/*.apk
+app-configuracoes/*.idsig
+app-configuracoes/*.jks
+*.log
+.DS_Store

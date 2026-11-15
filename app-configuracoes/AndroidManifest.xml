@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Atalho "Configurações" do Cinema em Casa: abre o app de configurações do projetor. -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.cinemaemcasa.configuracoes"
+    android:versionCode="2"
+    android:versionName="1.1">
+
+    <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="31" />
+    <uses-feature android:name="android.software.leanback" android:required="false" />
+    <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
+
+    <!-- Para enxergar e abrir o app de configurações do projetor (Android 11+). -->
+    <queries>
+        <package android:name="com.android.tv.settings" />
+    </queries>
+
+    <application
+        android:label="Configurações"
+        android:icon="@mipmap/ic_launcher"
+        android:banner="@drawable/banner"
+        android:allowBackup="false">
+        <activity
+            android:name=".Abrir"
+            android:exported="true"
+            android:theme="@android:style/Theme.NoDisplay">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Confirma sozinho o aviso "pressione OK para desligar" do sistema. -->
+        <service
+            android:name=".DesligarDireto"
+            android:label="@string/nome_desligar"
+            android:exported="true"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/desligar_direto" />
+        </service>
+    </application>
+</manifest>
